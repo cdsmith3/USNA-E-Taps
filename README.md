@@ -7,4 +7,6 @@ OCT 23: Edited Readme file
 
 TEST
 
+
+git clone url
 TEST
