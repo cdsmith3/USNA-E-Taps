@@ -18,3 +18,6 @@ It should be present in a window on the right side of atom.
 Hit commit, then click on the arrows in the lower left hand corder facing up and down. This allows you to push (submit basically).
 The down arrow allows you to pull from the repository the most updated file.
 Now the file can be seen in the GitHub repository.
+
+
+I changed this
