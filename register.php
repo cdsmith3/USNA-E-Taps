@@ -26,23 +26,23 @@
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputName">First name</label>
-                <input name="name" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
+                <input name="firstname" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
               </div>
               <div class="col-md-6">
                 <label for="exampleInputLastName">Last name</label>
-                <input class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
+                <input name = "lastname"class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
               </div>
             </div>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Alpha</label>
-            <input class="form-control" id="alpha" type="text" aria-describedby="emailHelp" placeholder="Enter alpha">
+            <input name = "alpha"class="form-control" id="alpha" type="text" aria-describedby="emailHelp" placeholder="Enter alpha">
           </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputPassword1">Password</label>
-                <input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
+                <input name = "password"class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
               </div>
               <div class="col-md-6">
                 <label for="exampleConfirmPassword">Confirm password</label>
@@ -53,15 +53,19 @@
           <input type="submit" class="btn btn-primary btn-block">
         </form>
         <?php
-$name = $_POST["name"];
+$firstname = $_POST["firstname"];
+$lastname = $_POST["lastname"];
+$alpha = $_POST["alpha"];
 $email = $_POST["email"];
+$password = $_POST["password"];
+
 //echo "$name";
 
 //$fp = fopen('test.txt', 'a');
-if(!$fp =fopen('test.txt', 'a')){
+if(!$fp =fopen('login.csv', 'a')){
   echo "This was false first";
 }
-$savestring = $name . ',' . $email . "\n";
+$savestring = $firstname . '|' . $lastname . '|' . $alpha  . '|' . $email . '|' . $password . "\n";
 echo "$savestring";
 if(!$fp = fwrite($fp, $savestring)){
   echo "we failed";
