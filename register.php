@@ -62,11 +62,10 @@ $password = $_POST["password"];
 //echo "$name";
 
 //$fp = fopen('test.txt', 'a');
-if(!$fp =fopen('login.csv', 'a')){
+if(!$fp =fopen('loginfo.csv', 'a')){
   echo "This was false first";
 }
 $savestring = $firstname . '|' . $lastname . '|' . $alpha  . '|' . $email . '|' . $password . "\n";
-echo "$savestring";
 if(!$fp = fwrite($fp, $savestring)){
   echo "we failed";
 }
