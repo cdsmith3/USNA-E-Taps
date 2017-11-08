@@ -1,4 +1,15 @@
 <!DOCTYPE html>
+<?php
+
+  require_once("error.inc.php");
+
+  $x = 5.0;
+  $y = 0.0;
+  $v = $x / $y;
+
+  echo "Math: $x * $y = $v <br>";
+
+?>
 <html lang="en">
 
 <head>
