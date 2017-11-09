@@ -58,6 +58,7 @@
           <input type="submit" class="btn btn-primary btn-block">
         </form>
         <?php
+
 $firstname = $_POST["firstname"];
 $lastname = $_POST["lastname"];
 $alpha = $_POST["alpha"];
