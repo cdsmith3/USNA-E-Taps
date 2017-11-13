@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-
-  require_once("error.inc.php");
+  // 
+  // require_once("error.inc.php");
 
 ?>
 <html lang="en">
