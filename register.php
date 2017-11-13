@@ -26,16 +26,16 @@
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Register an Account</div>
       <div class="card-body">
-        <form method="POST">
+        <form method="POST" action="?" onsubmit="return check()">
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputName">First name</label>
-                <input name="firstname" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
+                <input name="firstname" class="form-control" id="firstname" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
               </div>
               <div class="col-md-6">
                 <label for="exampleInputLastName">Last name</label>
-                <input name = "lastname"class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
+                <input name = "lastname"class="form-control" id="lastname" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
               </div>
             </div>
           </div>
@@ -47,16 +47,27 @@
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputPassword1">Password</label>
-                <input name = "password"class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
+                <input name = "password"class="form-control" id="password" type="password" placeholder="Password">
               </div>
               <div class="col-md-6">
                 <label for="exampleConfirmPassword">Confirm password</label>
-                <input class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
+                <input class="form-control" id="passwordconf" type="password" placeholder="Confirm password">
               </div>
             </div>
           </div>
           <input type="submit" class="btn btn-primary btn-block">
         </form>
+
+        <script>
+          function check() {
+            var first = document.getElementById('firstname');
+            var last = document.getElementById('lastname');
+            if(typeof first.value != "string" || typeof last.value != string) {
+              return false;
+            }
+          }
+
+        </script>
         <?php
 
 $firstname = $_POST["firstname"];
@@ -65,9 +76,16 @@ $alpha = $_POST["alpha"];
 $email = $_POST["email"];
 $password = $_POST["password"];
 
-//echo "$name";
+if(isset($_POST['firstname']) ) {
 
-//$fp = fopen('test.txt', 'a');
+} else {
+
+}
+
+
+
+
+
 if(!$fp =fopen('loginfo.csv', 'a')){
   echo "This was false first";
 }
