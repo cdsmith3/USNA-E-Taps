@@ -123,14 +123,14 @@ if(isset($_POST['firstname']) ) {
 
 
 
-if(!$fp =fopen('loginfo.csv', 'a')){
-  echo "This was false first";
-}
-$savestring = $firstname . '|' . $lastname . '|' . $alpha  . '|' . $email . '|' . $password . "\n";
-if(!$fp = fwrite($fp, $savestring)){
-  echo "we failed";
-}
-fclose($fp);
+// if(!$fp =fopen('loginfo.csv', 'a')){
+//   echo "This was false first";
+// }
+// $savestring = $firstname . '|' . $lastname . '|' . $alpha  . '|' . $email . '|' . $password . "\n";
+// if(!$fp = fwrite($fp, $savestring)){
+//   echo "we failed";
+// }
+// fclose($fp);
 
 ?>
         <div class="text-center">
