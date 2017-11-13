@@ -55,18 +55,55 @@
               </div>
             </div>
           </div>
+          <p id="wrong" class="danger">
+
+          </p>
           <input type="submit" class="btn btn-primary btn-block">
         </form>
 
         <script>
+        var first = document.getElementById('firstname');
+        var last = document.getElementById('lastname');
+        var alpha = document.getElementById('alpha');
+        var pass = document.getElementById('password');
+        var conf = document.getElementById('passwordconf');
+        // Used from W3Resource, checks if letter
+        var letters = /^[A-Za-z]+$/;
           function check() {
-            var first = document.getElementById('firstname');
-            var last = document.getElementById('lastname');
-            if(typeof first.value != "string" || typeof last.value != string) {
+
+            // Checks if anything was actually entered on submit
+            if(first.value == "" || last.value == "" || alpha.value == "" || pass.value == "" || conf.value == "") {
+              document.getElementById('wrong').innerHTML = "Please Enter all fields."
               return false;
             }
           }
 
+          function valid(x) {
+            if(!x.innerHTML.match(letters)) {
+              x.innerHTML = "";
+            }
+          }
+
+          first.onkeyup = valid(first);
+          last.onkeyup = valid(last);
+          alpha.onkeyup = function validA() {
+            if(!alpha.innerHTML.match(/^[0-9]+$/)) {
+              alpha.innterHTML = "";
+            }
+          }
+          password.onchange = function veritas() {
+            if(password.innerHTML.length < 8) {
+              // Temporary alert
+              alert("Please use a longer password");
+            }
+          }
+          passwordconf.onchange = function verify() {
+            if(passwordconf.innerHTML != password.innerHTML) {
+              // Temporary alert
+              alert("Passwords do not match!");
+              passwordconf.innerHTML = "";
+            }
+          }
         </script>
         <?php
 
