@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-  // 
+  //
   // require_once("error.inc.php");
 
 ?>
@@ -35,23 +35,23 @@
               </div>
               <div class="col-md-6">
                 <label for="exampleInputLastName">Last name</label>
-                <input name = "lastname"class="form-control" id="lastname" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
+                <input name = "lastname" class="form-control" id="lastname" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
               </div>
             </div>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Alpha</label>
-            <input name = "alpha"class="form-control" id="alpha" type="text" aria-describedby="emailHelp" placeholder="Enter alpha">
+            <input name = "alpha" class="form-control" id="alpha" type="text" aria-describedby="emailHelp" placeholder="Enter alpha">
           </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputPassword1">Password</label>
-                <input name = "password"class="form-control" id="password" type="password" placeholder="Password">
+                <input name="password" class="form-control" id="password" type="password" placeholder="Password">
               </div>
               <div class="col-md-6">
                 <label for="exampleConfirmPassword">Confirm password</label>
-                <input class="form-control" id="passwordconf" type="password" placeholder="Confirm password">
+                <input name="passconf" class="form-control" id="passwordconf" type="password" placeholder="Confirm password">
               </div>
             </div>
           </div>
@@ -100,8 +100,9 @@
           passwordconf.onchange = function verify() {
             if(passwordconf.innerHTML != password.innerHTML) {
               // Temporary alert
-              alert("Passwords do not match!");
               passwordconf.innerHTML = "";
+              alert("Passwords do not match!");
+
             }
           }
         </script>
@@ -111,12 +112,36 @@ $firstname = $_POST["firstname"];
 $lastname = $_POST["lastname"];
 $alpha = $_POST["alpha"];
 $password = $_POST["password"];
+$passconf = $_POST["passconf"];
 
-if(isset($_POST['firstname']) ) {
+// Use to read csv file of info
+function read_csv($filename, $header = True, $left_index = True) {
+  if($fp = fopen($filename, 'r')) {
+    while($row = fgetcsv($fp)) {
+      if(!isset($headers)) {
+        $headers = $row;
+      } else {
+        // Want to store as $data['O-4']['8']
+        // Reference rows first
+        foreach($row as $key=> $value) {
+          $data[$row[0]][$headers[$key]] = $value;
+        }
+      }
+    }
 
-} else {
-
+  }
+  return $data;
 }
+$userfile = 'user.txt';
+if(isset($_POST["firstname"]) && isset($_POST["lastname"]) && isset($_POST["alpha"])
+  && isset($_POST["password"]) && isset($_POST["passconf"])) {
+  $fp = fopen($userfile, 'a');
+}
+// if($_POST["alpha"] != "") {
+//   if($alpha ) {
+//
+//   }
+// }
 
 
 
