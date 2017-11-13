@@ -110,7 +110,6 @@
 $firstname = $_POST["firstname"];
 $lastname = $_POST["lastname"];
 $alpha = $_POST["alpha"];
-$email = $_POST["email"];
 $password = $_POST["password"];
 
 if(isset($_POST['firstname']) ) {
