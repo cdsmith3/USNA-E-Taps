@@ -26,7 +26,7 @@
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Register an Account</div>
       <div class="card-body">
-        <form method="POST" action="?" onsubmit="return check()">
+        <form method="POST" action="?">
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
@@ -39,10 +39,23 @@
               </div>
             </div>
           </div>
+
           <div class="form-group">
+            <div class="form-row">
+            <div class="col-md-4">
             <label for="exampleInputEmail1">Alpha</label>
             <input name = "alpha" class="form-control" id="alpha" type="text" aria-describedby="emailHelp" placeholder="Enter alpha">
           </div>
+          <div class="col-md-4">
+            <label for="exampleInputEmail1">Company</label>
+            <input name = "company" class="form-control" id="company" type="text" aria-describedby="emailHelp" placeholder="Enter company">
+          </div>
+          <div class="col-md-4">
+            <label for="exampleInputEmail1">Class Year</label>
+            <input name = "year" class="form-control" id="year" type="text" aria-describedby="emailHelp" placeholder="Enter Class Year">
+          </div>
+          </div>
+        </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
@@ -65,7 +78,7 @@
         var first = document.getElementById('firstname');
         var last = document.getElementById('lastname');
         var alpha = document.getElementById('alpha');
-        var pass = document.getElementById('password');
+        var password = document.getElementById('password');
         var conf = document.getElementById('passwordconf');
         // Used from W3Resource, checks if letter
         var letters = /^[A-Za-z]+$/;
@@ -92,7 +105,7 @@
             }
           }
           password.onchange = function veritas() {
-            if(password.innerHTML.length < 8) {
+            if(password.value < 8) {
               // Temporary alert
               alert("Please use a longer password");
             }
@@ -108,34 +121,13 @@
         </script>
         <?php
 
-$firstname = $_POST["firstname"];
-$lastname = $_POST["lastname"];
-$alpha = $_POST["alpha"];
-$password = $_POST["password"];
-$passconf = $_POST["passconf"];
-
-// Use to read csv file of info
-function read_csv($filename, $header = True, $left_index = True) {
-  if($fp = fopen($filename, 'r')) {
-    while($row = fgetcsv($fp)) {
-      if(!isset($headers)) {
-        $headers = $row;
-      } else {
-        // Want to store as $data['O-4']['8']
-        // Reference rows first
-        foreach($row as $key=> $value) {
-          $data[$row[0]][$headers[$key]] = $value;
-        }
-      }
-    }
-
-  }
-  return $data;
-}
 $userfile = 'users.txt';
 if(isset($_POST["firstname"]) && isset($_POST["lastname"]) && isset($_POST["alpha"])
-  && isset($_POST["password"]) && isset($_POST["passconf"])) {
-  $fp = fopen($userfile, 'a');
+  && isset($_POST["password"]) && isset($_POST["passconf"]) && isset($_POST['company'])) {
+  $fp = fopen('users.txt', 'a');
+  $savestring = $_POST['alpha'] . ',' . $_POST['firstname'] . ',' . $_POST['lastname'] . ',' . $_POST['company'] . ',' . $_POST['year'] . "\n";
+  fwrite($fp, $savestring);
+  fclose($fp);
 }
 
 
@@ -152,6 +144,11 @@ if(isset($_POST["firstname"]) && isset($_POST["lastname"]) && isset($_POST["alph
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <pre>
+    <?php
+    print_r($_POST);
+    ?>
+  </pre>
 </body>
 
 </html>
