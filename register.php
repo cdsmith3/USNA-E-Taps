@@ -132,33 +132,16 @@ function read_csv($filename, $header = True, $left_index = True) {
   }
   return $data;
 }
-$userfile = 'user.txt';
+$userfile = 'users.txt';
 if(isset($_POST["firstname"]) && isset($_POST["lastname"]) && isset($_POST["alpha"])
   && isset($_POST["password"]) && isset($_POST["passconf"])) {
   $fp = fopen($userfile, 'a');
 }
-// if($_POST["alpha"] != "") {
-//   if($alpha ) {
-//
-//   }
-// }
 
-
-
-
-
-// if(!$fp =fopen('loginfo.csv', 'a')){
-//   echo "This was false first";
-// }
-// $savestring = $firstname . '|' . $lastname . '|' . $alpha  . '|' . $email . '|' . $password . "\n";
-// if(!$fp = fwrite($fp, $savestring)){
-//   echo "we failed";
-// }
-// fclose($fp);
 
 ?>
         <div class="text-center">
-          <a class="d-block small mt-3" href="login.html">Login Page</a>
+          <a class="d-block small mt-3" href="login.php">Login Page</a>
           <a class="d-block small" href="forgot-password.php">Forgot Password?</a>
         </div>
       </div>
