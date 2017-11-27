@@ -1,6 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
 
+<html lang="en">
+<?php if(!isset($_COOKIE['loggedon'])){
+  header('Location: login.php');
+}
+?>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,9 +20,17 @@
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <script type="text/javascript" src="cookie.js"></script>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+  <script type="text/javascript">
+  var loggedon = "";
+  <?php if(isset($_COOKIE['loggedon'])){
+    echo "loggedon = getCookie('loggedon');";
+  }
+  ?>
+  </script>
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <a class="navbar-brand" href="index.html">Start Bootstrap</a>
@@ -215,7 +227,7 @@
           </form>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal" onclick="eraseCookie('loggedon')">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
         </li>
       </ul>

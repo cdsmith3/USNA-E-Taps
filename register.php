@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <?php
-  //
-  // require_once("error.inc.php");
-
+require_once("lib_read_csv.php");
+require_once("error.php");
 ?>
 <html lang="en">
 
@@ -19,6 +18,8 @@
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+
+  <script type="text/javascript" src="sha256.js"></script>
 </head>
 
 <body class="bg-dark">
@@ -26,52 +27,73 @@
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Register an Account</div>
       <div class="card-body">
-        <form method="POST" action="?">
+        <form method="post" action="?" onsubmit="return check()">
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputName">First name</label>
                 <input name="firstname" class="form-control" id="firstname" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
+                <span class="text-danger" id="firstError">
+
+                </span>
               </div>
               <div class="col-md-6">
                 <label for="exampleInputLastName">Last name</label>
                 <input name = "lastname" class="form-control" id="lastname" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
+                <span class="text-danger" id="lastError">
+
+                </span>
               </div>
             </div>
           </div>
 
           <div class="form-group">
             <div class="form-row">
-            <div class="col-md-4">
-            <label for="exampleInputEmail1">Alpha</label>
-            <input name = "alpha" class="form-control" id="alpha" type="text" aria-describedby="emailHelp" placeholder="Enter alpha">
+              <div class="col-md-4">
+                <label for="exampleInputEmail1">Alpha</label>
+                <input name = "alpha" class="form-control" id="alpha" type="text" aria-describedby="emailHelp" placeholder="Enter alpha">
+
+                <span class="text-danger" id="alphaError">
+
+                </span>
+
+              </div>
+              <div class="col-md-4">
+                <label for="exampleInputEmail1">Company</label>
+                <input name = "company" class="form-control" id="company" type="text" aria-describedby="emailHelp" placeholder="Enter company">
+              </div>
+              <div class="col-md-4">
+                <label for="exampleInputEmail1">Class Year</label>
+                <input name = "year" class="form-control" id="year" type="text" aria-describedby="emailHelp" placeholder="Enter Class Year">
+              </div>
+            </div>
           </div>
-          <div class="col-md-4">
-            <label for="exampleInputEmail1">Company</label>
-            <input name = "company" class="form-control" id="company" type="text" aria-describedby="emailHelp" placeholder="Enter company">
-          </div>
-          <div class="col-md-4">
-            <label for="exampleInputEmail1">Class Year</label>
-            <input name = "year" class="form-control" id="year" type="text" aria-describedby="emailHelp" placeholder="Enter Class Year">
-          </div>
-          </div>
-        </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputPassword1">Password</label>
                 <input name="password" class="form-control" id="password" type="password" placeholder="Password">
+
+                <p id="passError" class="text-danger">
+
+                </p>
+
               </div>
               <div class="col-md-6">
                 <label for="exampleConfirmPassword">Confirm password</label>
-                <input name="passconf" class="form-control" id="passwordconf" type="password" placeholder="Confirm password">
+                <input name="passwordconf" class="form-control" id="passwordconf" type="password" placeholder="Confirm password">
+                <div>
+                  <p id="passconfError" class="text-danger">
+
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-          <p id="wrong" class="danger">
+          <p id="wrong" class="text-dangerr">
 
           </p>
-          <input type="submit" class="btn btn-primary btn-block">
+          <input type="submit" class="btn btn-primary btn-block" name="" value="Register">
         </form>
 
         <script>
@@ -79,59 +101,83 @@
         var last = document.getElementById('lastname');
         var alpha = document.getElementById('alpha');
         var password = document.getElementById('password');
-        var conf = document.getElementById('passwordconf');
+        var passwordconf = document.getElementById('passwordconf');
         // Used from W3Resource, checks if letter
         var letters = /^[A-Za-z]+$/;
-          function check() {
+        function check() {
 
-            // Checks if anything was actually entered on submit
-            if(first.value == "" || last.value == "" || alpha.value == "" || pass.value == "" || conf.value == "") {
-              document.getElementById('wrong').innerHTML = "Please Enter all fields."
-              return false;
-            }
-          }
+          // Checks if anything was actually entered on submit
+          if(first.value == "" || last.value == "" || alpha.value == "" || password.value == "" || passwordconf.value == "" || password.value.length < 8 || passwordconf.value != password.value || !alpha.value.match(/^[0-9]+$/)) {
 
-          function valid(x) {
-            if(!x.innerHTML.match(letters)) {
-              x.innerHTML = "";
-            }
+            return false;
+          }else{
+            return true;
           }
+        }
 
-          first.onkeyup = valid(first);
-          last.onkeyup = valid(last);
-          alpha.onkeyup = function validA() {
-            if(!alpha.innerHTML.match(/^[0-9]+$/)) {
-              alpha.innterHTML = "";
-            }
-          }
-          password.onchange = function veritas() {
-            if(password.value < 8) {
-              // Temporary alert
-              alert("Please use a longer password");
-            }
-          }
-          passwordconf.onchange = function verify() {
-            if(passwordconf.innerHTML != password.innerHTML) {
-              // Temporary alert
-              passwordconf.innerHTML = "";
-              alert("Passwords do not match!");
+        // function valid(x) {
+        //   if(!isNaN(x.value)) {
+        //     x.value = "";
+        //   }
+        // }
 
-            }
+        //
+        //last.onkeyup = valid(last);
+        first.onkeyup = function validf() {
+          var matches = first.value.match(/\d+/g);
+          if (matches != null) {
+            document.getElementById('firstError').innerHTML = "Letters only!";
+
           }
+          else{
+            document.getElementById('firstError').innerHTML = "";
+          }
+        }
+        alpha.onkeyup = function validA() {
+          if(!alpha.value.match(/^[0-9]+$/)) {
+
+            document.getElementById('alphaError').innerHTML = "Numbers only!";
+          }
+          else{
+            document.getElementById('alphaError').innerHTML = "";
+          }
+        }
+        alpha.onchange = function length(){
+          if(alpha.value.length != 6){
+
+            document.getElementById('alphaError').innerHTML = "Enter 6 digits!";
+          }else {
+            document.getElementById('alphaError').innerHTML = "";
+          }
+        }
+        password.onchange = function veritas() {
+          if(password.value.length < 8) {
+            document.getElementById('passError').innerHTML = "Password must be 8 characters or greater!";
+          }else{
+            document.getElementById('passError').innerHTML = "";
+          }
+        }
+        passwordconf.onchange = function verify() {
+          if(passwordconf.value != password.value) {
+            document.getElementById('passconfError').innerHTML = "Passwords not the same!";
+          }else{
+            document.getElementById('passconfError').innerHTML = "";
+          }
+        }
         </script>
         <?php
 
-$userfile = 'users.txt';
-if(isset($_POST["firstname"]) && isset($_POST["lastname"]) && isset($_POST["alpha"])
-  && isset($_POST["password"]) && isset($_POST["passconf"]) && isset($_POST['company'])) {
-  $fp = fopen('users.txt', 'a');
-  $savestring = $_POST['alpha'] . ',' . $_POST['firstname'] . ',' . $_POST['lastname'] . ',' . $_POST['company'] . ',' . $_POST['year'] . "\n";
-  fwrite($fp, $savestring);
-  fclose($fp);
-}
+
+        if(isset($_POST["firstname"]) && isset($_POST["lastname"]) && isset($_POST["alpha"])
+        && isset($_POST["password"]) && isset($_POST["passconf"]) && isset($_POST['company'])) {
+          $fp = fopen('users.csv', 'a');
+          $savestring = $_POST['alpha'] . ',' . $_POST['firstname'] . ',' . $_POST['lastname'] . ',' . $_POST['company'] . ',' . $_POST['year'] . ',' . hash("sha256", $_POST['password']) . "\n";
+          fwrite($fp, $savestring);
+          fclose($fp);
+        }
 
 
-?>
+        ?>
         <div class="text-center">
           <a class="d-block small mt-3" href="login.php">Login Page</a>
           <a class="d-block small" href="forgot-password.php">Forgot Password?</a>
