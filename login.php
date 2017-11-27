@@ -1,3 +1,13 @@
+<?php
+  require_once("lib_read_csv.php");
+  # Checks if the login info submitted matches the CSV file of logins
+  // May not be correct filename
+  $filename = "loginfo.csv";
+// Check parameters, not sure if true true
+  $CSV = read_csv($filename, True, True);
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
