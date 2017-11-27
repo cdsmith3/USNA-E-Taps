@@ -15,6 +15,7 @@
           $headers = array_keys($row);
         }
         if (!isset($headers)) {
+<<<<<<< HEAD
           $headers = $row;
         } else {
           foreach ($row as $i => $value) {
@@ -22,6 +23,18 @@
               $table[$row[0]][$headers[$i]] = $value;
             } else {
               $table[$counter][$headers[$i]] = $value;
+=======
+          $headers = array();
+          foreach ($row as $header) {
+            $headers[] = trim($header);
+          }
+        } else {
+          foreach ($row as $i => $value) {
+            if ($withLeftID) {
+              $table[$row[0]][$headers[$i]] = trim($value);
+            } else {
+              $table[$counter][$headers[$i]] = trim($value);
+>>>>>>> c340fb9d6102df7b40873cff5cc6894b55619727
             }
           }
         }
