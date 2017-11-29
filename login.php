@@ -55,7 +55,7 @@ echo "$ip";
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">E-Taps Login</div>
       <div class="card-body">
-          <form method="post" action="?" >
+          <form method="post" action="?" onsubmit="compute();">
           <div class="form-group">
             <label for="exampleInputEmail1">Alpha</label>
             <input class="form-control" name="alpha" id="alpha" type="test" aria-describedby="emailHelp" placeholder="Enter alpha">
@@ -70,7 +70,7 @@ echo "$ip";
                 <input class="form-check-input" type="checkbox"> Remember Password</label>
               </div>
             </div>
-            <input class="btn btn-primary btn-block" type="submit" name="" value="Login" onclick="compute();">
+            <input class="btn btn-primary btn-block" type="submit" name="" value="Login">
           </form>
           <div class="text-center">
             <a class="d-block small mt-3" href="register.php">Register an Account</a>
@@ -82,7 +82,6 @@ echo "$ip";
 
     <?php
     session_start();
-
     $CSV = read_csv('users.csv');
     if(isset($_POST['alpha']) && isset($CSV[$_POST['alpha']])){
 
@@ -94,7 +93,7 @@ echo "$ip";
 
     }
 
-  $_SESSION['nonce'] = base64_encode(bin2hex(openssl_random_pseudo_bytes(16)));
+    $_SESSION['nonce'] = base64_encode(bin2hex(openssl_random_pseudo_bytes(16)));
 
     ?>
 
@@ -104,8 +103,6 @@ echo "$ip";
     var enteredPassword = Sha256.hash(document.getElementById('password').value);
     var results = Sha256.hash(enteredPassword+nonce);
     document.getElementById('password').value = results;
-    alert(enteredPassword);
-    alert(nonce);
     }
     </script>
     <!-- Bootstrap core JavaScript-->
@@ -119,7 +116,6 @@ echo "$ip";
       print_r($_SESSION);
       print_r($_POST);
       print_r($_COOKIE);
-
       ?>
     </pre>
   </body>
