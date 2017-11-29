@@ -49,7 +49,7 @@ require_once("error.php");
 
           <div class="form-group">
             <div class="form-row">
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <label for="exampleInputEmail1">Alpha</label>
                 <input name = "alpha" class="form-control" id="alpha" type="text" aria-describedby="emailHelp" placeholder="Enter alpha">
 
@@ -58,11 +58,24 @@ require_once("error.php");
                 </span>
 
               </div>
-              <div class="col-md-4">
+              <div class="col-md-6">
+                <label for="exampleInputEmail1">Phone Number</label>
+                <input name = "phone" class="form-control" id="phone" type="text" aria-describedby="emailHelp" placeholder="Enter phone number">
+
+                <span class="text-danger" id="phoneError">
+
+                </span>
+
+              </div>
+            </div>
+          </div>
+              <div class="form-group">
+              <div class="form-row">
+              <div class="col-md-6">
                 <label for="exampleInputEmail1">Company</label>
                 <input name = "company" class="form-control" id="company" type="text" aria-describedby="emailHelp" placeholder="Enter company">
               </div>
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <label for="exampleInputEmail1">Class Year</label>
                 <input name = "year" class="form-control" id="year" type="text" aria-describedby="emailHelp" placeholder="Enter Class Year">
               </div>
@@ -169,14 +182,14 @@ require_once("error.php");
 
 
         if(isset($_POST["firstname"]) && isset($_POST["lastname"]) && isset($_POST["alpha"])
-        && isset($_POST["password"]) && isset($_POST["passconf"]) && isset($_POST['company'])) {
+        && isset($_POST["password"]) && isset($_POST["passwordconf"]) && isset($_POST['company'])) {
           $fp = fopen('users.csv', 'a');
-          $savestring = $_POST['alpha'] . ',' . $_POST['firstname'] . ',' . $_POST['lastname'] . ',' . $_POST['company'] . ',' . $_POST['year'] . ',' . hash("sha256", $_POST['password']) . "\n";
+          $savestring =  $_POST['alpha'] . ',' . $_POST['firstname'] . ',' . $_POST['lastname'] . ',' . $_POST['company'] . ',' . $_POST['year'] . ','  . hash("sha256", $_POST['password']) . ','  . $_POST['phone'] . "\n";
+
           fwrite($fp, $savestring);
           fclose($fp);
         }
-
-
+unlink('test.txt');
         ?>
         <div class="text-center">
           <a class="d-block small mt-3" href="login.php">Login Page</a>
