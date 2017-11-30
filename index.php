@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<?php if(!isset($_COOKIE['loggedon'])){
+<?php if(!isset($_COOKIE['loggedon']) && !isset($_SESSION['loggedon'])){
   header('Location: login.php');
 }
 ?>

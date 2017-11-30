@@ -1,27 +1,8 @@
 <!DOCTYPE html>
 <?php   require_once("lib_read_csv.php");
         require_once("error.php");
-        function getRealIpAddr()
-{
-    if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
-    {
-      $ip=$_SERVER['HTTP_CLIENT_IP'];
-    }
-    elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))   //to check ip is pass from proxy
-    {
-      $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
-    }
-    else
-    {
-      $ip=$_SERVER['REMOTE_ADDR'];
-    }
-    return $ip;
-}
-$ip = getRealIpAddr();
-echo "$ip";
-        if(isset($_COOKIE['loggedon'])){
-          header('Location: index.php');
-        }
+        session_start();
+
 
 ?>
 <html lang="en">
@@ -55,7 +36,7 @@ echo "$ip";
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">E-Taps Login</div>
       <div class="card-body">
-          <form method="post" action="?" onsubmit="compute();">
+          <form method="post" action="?">
           <div class="form-group">
             <label for="exampleInputEmail1">Alpha</label>
             <input class="form-control" name="alpha" id="alpha" type="test" aria-describedby="emailHelp" placeholder="Enter alpha">
@@ -70,7 +51,7 @@ echo "$ip";
                 <input class="form-check-input" type="checkbox"> Remember Password</label>
               </div>
             </div>
-            <input class="btn btn-primary btn-block" type="submit" name="" value="Login">
+            <input class="btn btn-primary btn-block"  type="submit" name="" value="Login">
           </form>
           <div class="text-center">
             <a class="d-block small mt-3" href="register.php">Register an Account</a>
@@ -81,30 +62,28 @@ echo "$ip";
     </div>
 
     <?php
-    session_start();
+
     $CSV = read_csv('users.csv');
+
     if(isset($_POST['alpha']) && isset($CSV[$_POST['alpha']])){
 
-      $results = hash('sha256', $CSV[$_REQUEST['alpha']]['Password'].$_SESSION['nonce']);
-      if($results == $_POST['password']){
+
+      if($CSV[$_REQUEST['alpha']]['Password'] == hash('sha256', $_POST['password'])){
+        $_SESSION['loggedon'] = $_POST['alpha'];
+        $_COOKIE['loggedon'] = $_POST['alpha'];
+        setcookie("loggedon", $_POST['alpha'], time()+30*24*60*60);
         echo "<script type='text/javascript'>setCookie('loggedon',{$_POST['alpha']},90)</script>";
 
       }
+      if(isset( $_COOKIE['loggedon'])){
+        header('Location: index.php');
 
+      }
     }
-
-    $_SESSION['nonce'] = base64_encode(bin2hex(openssl_random_pseudo_bytes(16)));
 
     ?>
 
-    <script type="text/javascript">
-    var nonce = <?php echo json_encode($_SESSION['nonce']); ?>;
-    function compute() {
-    var enteredPassword = Sha256.hash(document.getElementById('password').value);
-    var results = Sha256.hash(enteredPassword+nonce);
-    document.getElementById('password').value = results;
-    }
-    </script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
