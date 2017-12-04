@@ -115,6 +115,7 @@ require_once("error.php");
         var alpha = document.getElementById('alpha');
         var password = document.getElementById('password');
         var passwordconf = document.getElementById('passwordconf');
+        var phone = document.getElementById('phone');
         // Used from W3Resource, checks if letter
         var letters = /^[A-Za-z]+$/;
         function check() {
