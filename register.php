@@ -69,8 +69,8 @@ require_once("error.php");
               </div>
             </div>
           </div>
-              <div class="form-group">
-              <div class="form-row">
+          <div class="form-group">
+            <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputEmail1">Company</label>
                 <input name = "company" class="form-control" id="company" type="text" aria-describedby="emailHelp" placeholder="Enter company">
@@ -183,13 +183,25 @@ require_once("error.php");
 
         if(isset($_POST["firstname"]) && isset($_POST["lastname"]) && isset($_POST["alpha"])
         && isset($_POST["password"]) && isset($_POST["passwordconf"]) && isset($_POST['company'])) {
-          $fp = fopen('users.csv', 'a');
+          $filename = $_POST['company'] . ".csv";
+
+          if (!file_exists($filename)){
+            $fp = fopen($filename, 'a');
+            $string = "Alpha,First,Last,Company,Year,Password,Phone Number \n";
+            fwrite($fp, $string);
+
+          }else{
+            $fp = fopen($filename, 'a');
+          }
+
+          $fp2 = fopen('users.csv', 'a');
           $savestring =  $_POST['alpha'] . ',' . $_POST['firstname'] . ',' . $_POST['lastname'] . ',' . $_POST['company'] . ',' . $_POST['year'] . ','  . hash("sha256", $_POST['password']) . ','  . $_POST['phone'] . "\n";
 
           fwrite($fp, $savestring);
+          fwrite($fp2, $savestring);
           fclose($fp);
         }
-unlink('test.txt');
+
         ?>
         <div class="text-center">
           <a class="d-block small mt-3" href="login.php">Login Page</a>

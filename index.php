@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<?php if(!isset($_COOKIE['loggedon']) && !isset($_SESSION['loggedon'])){
+
+<?php
+require_once("error.php");
+if(!isset($_COOKIE['loggedon'])){
   header('Location: login.php');
 }
+
 ?>
 <head>
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,17 +25,39 @@
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
-  <script type="text/javascript" src="cookie.js"></script>
+  <script type="text/javascript">
+
+  function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  function eraseCookie(cname){
+    setCookie(cname, "", -1);
+  }
+
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return null;
+  }
+  </script>
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
-  <script type="text/javascript">
-  var loggedon = "";
-  <?php if(isset($_COOKIE['loggedon'])){
-    echo "loggedon = getCookie('loggedon');";
-  }
-  ?>
-  </script>
+
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <a class="navbar-brand" href="index.html">Start Bootstrap</a>
@@ -52,7 +79,7 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="tables.php">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text">Tables</span>
           </a>
@@ -227,7 +254,7 @@
           </form>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal" onclick="eraseCookie('loggedon')">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal" >
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
         </li>
       </ul>
@@ -1114,7 +1141,7 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.php">Logout</a>
+            <a href="login.php" class="btn btn-primary" onclick="eraseCookie('loggedon');">Logout</a>
           </div>
         </div>
       </div>

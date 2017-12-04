@@ -25,13 +25,7 @@
 </head>
 
 <body class="bg-dark">
-  <script type="text/javascript">
-  var user = "";
-  <?php if(isset($_COOKIE['loggedon'])){
-    echo "user = getCookie('loggedon');";
-  }
-  ?>
-  </script>
+
   <div class="container">
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">E-Taps Login</div>
@@ -66,19 +60,16 @@
     $CSV = read_csv('users.csv');
 
     if(isset($_POST['alpha']) && isset($CSV[$_POST['alpha']])){
-
-
       if($CSV[$_REQUEST['alpha']]['Password'] == hash('sha256', $_POST['password'])){
         $_SESSION['loggedon'] = $_POST['alpha'];
-        $_COOKIE['loggedon'] = $_POST['alpha'];
-        setcookie("loggedon", $_POST['alpha'], time()+30*24*60*60);
-        echo "<script type='text/javascript'>setCookie('loggedon',{$_POST['alpha']},90)</script>";
-
-      }
-      if(isset( $_COOKIE['loggedon'])){
+        setcookie("loggedon", $_POST['alpha'], time()+30*24*60*60, "/");
         header('Location: index.php');
-
       }
+
+    }
+    if(isset( $_COOKIE['loggedon'])){
+      header('Location: index.php');
+
     }
 
     ?>
@@ -91,9 +82,7 @@
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <pre>
       <?php
-      print_r($CSV);
       print_r($_SESSION);
-      print_r($_POST);
       print_r($_COOKIE);
       ?>
     </pre>

@@ -28,6 +28,7 @@
         $counter++;
       }
     }
+    if(isset($table))
     return $table;
   }
 
