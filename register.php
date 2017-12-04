@@ -182,7 +182,7 @@ require_once("error.php");
 
 
         if(isset($_POST["firstname"]) && isset($_POST["lastname"]) && isset($_POST["alpha"])
-        && isset($_POST["password"]) && isset($_POST["passwordconf"]) && isset($_POST['company'])) {
+        && isset($_POST["password"]) && isset($_POST["passwordconf"]) && isset($_POST['company']) && isset($_POST['phone'])) {
           $filename = $_POST['company'] . ".csv";
 
           if (!file_exists($filename)){
