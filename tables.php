@@ -37,7 +37,6 @@
 
   </script>
 </head>
-
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -144,7 +143,6 @@
       </ul>
     </div>
   </nav>
-
   <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
@@ -160,146 +158,133 @@
         <div class="card-header">
           <i class="fa fa-table"></i> TAPS Tracker</div>
           <div class="col-sm-1 col-md-1">
+            <form method="post" action="?">
+              <input type="hidden" name="signed" value="true" />
+              <input type="submit" name="login" value="sign taps" />
+            </form>
+            <?php
+            $CSV = read_csv('users.csv');
+            if(isset($_POST['signed'])){
+              $date = date('d-m-Y');
+              $filename = $date . ".csv";
+              $time = date('H:i:s');
 
-          <form method="post" action="?">
-            <input type="hidden" name="signed" value="true" />
-            <input type="submit" name="login" value="sign taps" />
-          </form>
-          <?php
-          $CSV = read_csv('users.csv');
-          if(isset($_POST['signed'])){
-            $date = date('d-m-Y');
-            $filename = $date . ".csv";
-            $time = date('H:i:s');
+              if (!file_exists($filename)) {
+                $fp = fopen($filename, 'a');
+                $string = "Alpha,Time\n";
+                fwrite($fp, $string);
+              } else {
+                $fp = fopen($filename, 'a');
+              }
 
-            if (!file_exists($filename)){
-              $fp = fopen($filename, 'a');
-              $string = "Alpha,Time\n";
-              fwrite($fp, $string);
-            }else{
-              $fp = fopen($filename, 'a');
+              $signedTaps = read_csv($filename);
+              if(!isset($signedTaps[$_COOKIE['loggedon']])) {
+                $string = $_COOKIE['loggedon'] . "," . $time . "\n";
+                fwrite($fp, $string);
+              }
+              fclose($fp);
             }
-            $signedTaps = read_csv($filename);
-            if(!isset($signedTaps[$_COOKIE['loggedon']])){
-            $string = $_COOKIE['loggedon'] . "," . $time . "\n";
-            fwrite($fp, $string);
-          }
-            fclose($fp);
-          }
+            require_once("error.php");
+            ?>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered dataTable" id="dataTable" style="width: 100%;" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Alpha</th>
+                    <th>Phone Number</th>
+                    <th>Year</th>
+                    <th>Company</th>
+                    <th>Signed Taps/Weekend</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <?php
+                $midshipmen = read_csv('users.csv');
+                $date = date('d-m-Y');
+                $file =  $date . ".csv";
+                if(file_exists($file))
+                  $signedTaps = read_csv($file);
 
-
-
-
-          require_once("error.php");
-          ?>
-</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered dataTable" id="dataTable" style="width: 100%;" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Alpha</th>
-                  <th>Phone Number</th>
-                  <th>Year</th>
-                  <th>Company</th>
-                  <th>Signed Taps/Weekend</th>
-                </tr>
-              </thead>
-
-              <tbody>
-<?php
-
-$midshipmen = read_csv('users.csv');
-$date = date('d-m-Y');
-$file =  $date . ".csv";
-if(file_exists($file))
-$signedTaps = read_csv($file);
-
-ksort($midshipmen);
-foreach ($midshipmen as $key => $value) {
-echo "<tr role='row'>";
-$name = $midshipmen[$key]['First'] . " " . $midshipmen[$key]['Last'];
-$company = $midshipmen[$key]['Company'] . "<sup>th</sup>";
-  echo "<td>$name</td>";
-  echo "<td>$key</td>";
-  echo "<td>{$midshipmen[$key]['Phone Number']}</td>";
-  echo "<td>{$midshipmen[$key]['Year']}</td>";
-  echo "<td>$company</td>";
-  if(isset($signedTaps[$key]['Time'])){
-  echo "<td style='background-color:green;'>{$signedTaps[$key]['Time']}</td>";
-}
-  else {
-    echo "<td style='background-color:red;'>No</td>";
-  }
-  echo "</tr>";
-}
-
-
-?>
-
-              </tbody>
-            </table>
+                ksort($midshipmen);
+                foreach ($midshipmen as $key => $value) {
+                  echo "<tr role='row'>";
+                  $name = $midshipmen[$key]['First'] . " " . $midshipmen[$key]['Last'];
+                  $company = $midshipmen[$key]['Company'] . "<sup>th</sup>";
+                  echo "<td>$name</td>";
+                  echo "<td>$key</td>";
+                  echo "<td>{$midshipmen[$key]['Phone Number']}</td>";
+                  echo "<td>{$midshipmen[$key]['Year']}</td>";
+                  echo "<td>$company</td>";
+                  if(isset($signedTaps[$key]['Time'])) {
+                    echo "<td style='background-color:green;'>{$signedTaps[$key]['Time']}</td>";
+                  } else {
+                    echo "<td style='background-color:red;'>No</td>";
+                  }
+                  echo "</tr>";
+                }
+                ?>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-
       </div>
-    </div>
-    <script type="text/javascript">
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
+      <script type="text/javascript">
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
            document.getElementById("demo").innerHTML = xhttp.responseText;
         }
-    };
-    xhttp.open("GET", "docs/xmlhttprequest.php", true);
-    xhttp.send();
-
-    </script>
-    <!-- /.container-fluid-->
-    <!-- /.content-wrapper-->
-    <footer class="sticky-footer">
-      <div class="container">
-        <div class="text-center">
-          <small>Copyright © RoughRiderNet</small>
+      };
+      xhttp.open("GET", "docs/xmlhttprequest.php", true);
+      xhttp.send();
+      </script>
+      <!-- /.container-fluid-->
+      <!-- /.content-wrapper-->
+      <footer class="sticky-footer">
+        <div class="container">
+          <div class="text-center">
+            <small>Copyright © RoughRiderNet</small>
+          </div>
         </div>
-      </div>
-    </footer>
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fa fa-angle-up"></i>
-    </a>
-    <!-- Logout Modal-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+      </footer>
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+      </a>
+      <!-- Logout Modal-->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+              </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+              </div>
+            </div>
           </div>
         </div>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Page level plugin JavaScript-->
+        <script src="vendor/datatables/jquery.dataTables.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin.min.js"></script>
+        <!-- Custom scripts for this page-->
+        <script src="js/sb-admin-datatables.min.js"></script>
       </div>
-    </div>
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Page level plugin JavaScript-->
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
-    <!-- Custom scripts for this page-->
-    <script src="js/sb-admin-datatables.min.js"></script>
-  </div>
-</body>
-
+    </body>
 </html>
