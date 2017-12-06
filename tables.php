@@ -261,6 +261,7 @@
           <form method="post" action="?">
             <input type="hidden" name="signed" value="true" />
             <input type="submit" name="login" value="sign taps" />
+            <input type="date" name="date" />
           </form>
           <?php
           $CSV = read_csv('users.csv');
