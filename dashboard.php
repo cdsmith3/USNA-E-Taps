@@ -206,7 +206,17 @@ if($_COOKIE['loggedon'] != 111111){
 
 
           ?>
-          <p>Your profile info (name, company, rank, class etc)</p>
+          <br><p>Your profile info (name, company, rank, class etc)</p>
+          <br><p>Midshipman <?php
+
+          if($midshipmen[$_COOKIE['loggedon']]['']== 2019){
+            echo "2/C";
+          }
+
+
+
+           ?></p>
+
           <?php
           $date = date('d-m-Y');
           $file =  $date . ".csv";
