@@ -158,6 +158,19 @@ if($_COOKIE['loggedon'] != 111111){
         <input type='hidden' name='weekend' value='true' />
         <input class='btn btn-primary' type='submit' name='login' value='Take Weekend' />
       </form>";
+
+
+
+      if($midshipmen[$_COOKIE['loggedon']]['Year']== '2019'){
+        echo "<br><p>Midshipman 2/C";
+      } else if ($midshipmen[$_COOKIE['loggedon']]['Year']== '2018'){
+        echo "<br><p>Midshipman 1/C";
+      } else if ($midshipmen[$_COOKIE['loggedon']]['Year']== '2021'){
+        echo "<br><p>Midshipman 4/C";
+      } else if ($midshipmen[$_COOKIE['loggedon']]['Year']== '2020'){
+        echo "<br><p>Midshipman 3/C";
+      }
+       echo "</p>";
 }
           ?>
 
@@ -207,15 +220,7 @@ if($_COOKIE['loggedon'] != 111111){
 
           ?>
           <br><p>Your profile info (name, company, rank, class etc)</p>
-          <br><p>Midshipman <?php
 
-          if($midshipmen[$_COOKIE['loggedon']]['']== 2019){
-            echo "2/C";
-          }
-
-
-
-           ?></p>
 
           <?php
           $date = date('d-m-Y');
