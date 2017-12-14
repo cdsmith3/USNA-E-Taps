@@ -19,6 +19,8 @@ require_once("lib_read_csv.php");
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/7/78/Navy_Athletics_logo.png">
+  
   <script type="text/javascript" src="sha256.js"></script>
   <script type="text/javascript" src="cookie.js"></script>
 </head>
@@ -41,7 +43,7 @@ require_once("lib_read_csv.php");
           <div class="form-group">
             <div class="form-check">
               <label class="form-check-label">
-              
+
               </div>
             </div>
             <input class="btn btn-primary btn-block"  type="submit" name="" value="Login">
