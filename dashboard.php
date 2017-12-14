@@ -43,10 +43,10 @@
             <span class="nav-link-text">Dashboard</span>
           </a>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="charts.html">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Weekend List">
+          <a class="nav-link" href="weekends.php">
             <i class="fa fa-fw fa-area-chart"></i>
-            <span class="nav-link-text">Charts</span>
+            <span class="nav-link-text">Weekends</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
@@ -223,6 +223,7 @@ if($_COOKIE['loggedon'] != 111111){
 
 
           <?php
+          if($_COOKIE['loggedon'] != 111111){
           $date = date('Y-m-d');
           $file =  $date . ".csv";
           $file2 = date('W') . ".csv";
@@ -272,9 +273,32 @@ if($_COOKIE['loggedon'] != 111111){
         }
 
 }
+} else {
+  echo "<p>";
+
+  $date = date('W');
+  $file =  $date . ".csv";
+  if(file_exists($file))
+  $signedTaps = read_csv($file);
+
+$we=true;
+  foreach ($midshipmen as $key => $value) {
+
+    if(isset($signedTaps[$key]['Approved']) && $signedTaps[$key]['Approved'] == "no"){
+      echo "You have weekends to approve.";
+      $we = false;
+      break;
+    }
+
+  }
+if($we)echo "You do not have weekends to approve.";
+  echo "</p>";
+
+
+
+}
           ?>
           <p>When you signed taps</p>
-          <p>.</p>
           <p>This is an example of a blank page that you can use as a starting point for creating new ones.</p>
         </div>
       </div>
