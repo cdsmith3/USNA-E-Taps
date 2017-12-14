@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<?php   require_once("lib_read_csv.php");
+<?php
+require_once("lib_read_csv.php");
         require_once("error.php");
         session_start();
-
-
 ?>
 <html lang="en">
 

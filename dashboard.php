@@ -1,7 +1,18 @@
 <!DOCTYPE html>
+<?php   require_once("lib_read_csv.php");
+        require_once("error.php");
+        session_start();
+        $midshipmen = read_csv('users.csv');
+        if(!isset($_COOKIE['loggedon'])) {
+          header('Location: login.php');
+        }
+        ?>
+
+
 <html lang="en">
 
 <head>
+  <script type="text/javascript" src="cookie.js"></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -133,10 +144,88 @@
       </ol>
       <div class="row">
         <div class="col-12">
-          <h1>Welcome [user]!</h1>
+
+          <h1>Welcome <?php echo "{$midshipmen[$_COOKIE['loggedon']]['First']}"; ?>!</h1>
+          <?php
+if($_COOKIE['loggedon'] != 111111){
+  echo "  <form method='post' action='?'>
+      <input type='hidden' name='signed' value='true' />
+      <input type='submit' name='login' value='sign taps' />
+    </form>"
+    ;
+    echo "  <form method='post' action='?'>
+        <input type='hidden' name='weekend' value='true' />
+        <input type='submit' name='login' value='Take Weekend' />
+      </form>";
+}
+          ?>
+
+          <?php
+          if(isset($_POST['signed'])){
+            $date = date('Y-m-d');
+            $filename = $date . ".csv";
+            $time = date('H:i:s');
+
+            if (!file_exists($filename)){
+              $fp = fopen($filename, 'a');
+              $string = "Alpha,Time\n";
+              fwrite($fp, $string);
+            }else{
+              $fp = fopen($filename, 'a');
+            }
+            $signedTaps = read_csv($filename);
+            if(!isset($signedTaps[$_COOKIE['loggedon']])){
+            $string = $_COOKIE['loggedon'] . "," . $time . "\n";
+            fwrite($fp, $string);
+          }
+            fclose($fp);
+          }
+
+          if(isset($_POST['weekend'])){
+            $date = date('W');
+            $filename = $date . ".csv";
+            $time = date('H:i:s');
+
+            if (!file_exists($filename)){
+              $fp = fopen($filename, 'a');
+              $string = "Alpha,Time\n";
+              fwrite($fp, $string);
+            }else{
+              $fp = fopen($filename, 'a');
+            }
+            $signedTaps = read_csv($filename);
+            if(!isset($signedTaps[$_COOKIE['loggedon']])){
+            $string = $_COOKIE['loggedon'] . "," . "yes" . "\n";
+            fwrite($fp, $string);
+          }
+            fclose($fp);
+          }
+
+
+
+
+          ?>
           <p>Your profile info (name, company, rank, class etc)</p>
+          <?php
+          $date = date('d-m-Y');
+          $file =  $date . ".csv";
+          if(file_exists($file)){
+          $signedTaps = read_csv($file);
+          if(isset($signedTaps[$_COOKIE['loggedon']]['Time'])){
+          echo "<p>
+          You Signed Taps at {$signedTaps[$_COOKIE['loggedon']]['Time']}
+          </p>";
+        }
+        else{
+          echo "<p>
+          You have not signed Taps
+          </p>";
+        }
+        }
+
+
+          ?>
           <p>When you signed taps</p>
-          <p>Where you signed taps</p>
           <p>.</p>
           <p>This is an example of a blank page that you can use as a starting point for creating new ones.</p>
         </div>
@@ -168,7 +257,7 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a href="login.php" class="btn btn-primary" onclick="eraseCookie('loggedon');">Logout</a>
           </div>
         </div>
       </div>

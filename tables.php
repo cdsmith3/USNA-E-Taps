@@ -8,12 +8,15 @@ if($midshipmen[$a]['Admin'] == 'no'){
   header('Location: index.php');
 }
 
-
+if(!isset($_COOKIE['loggedon'])) {
+  header('Location: login.php');
+}
 
 ?>
 <html lang="en">
 
 <head>
+  <script type="text/javascript" src="cookie.js"></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -167,40 +170,22 @@ if($midshipmen[$a]['Admin'] == 'no'){
           <i class="fa fa-table"></i> TAPS Tracker</div>
           <div class="col-sm-1 col-md-1">
 
-          <form method="post" action="?">
-            <input type="hidden" name="signed" value="true" />
-            <input type="submit" name="login" value="sign taps" />
-          </form>
+
           <?php
           $CSV = read_csv('users.csv');
-          if(isset($_POST['signed'])){
-            $date = date('d-m-Y');
-            $filename = $date . ".csv";
-            $time = date('H:i:s');
-
-            if (!file_exists($filename)){
-              $fp = fopen($filename, 'a');
-              $string = "Alpha,Time\n";
-              fwrite($fp, $string);
-            }else{
-              $fp = fopen($filename, 'a');
-            }
-            $signedTaps = read_csv($filename);
-            if(!isset($signedTaps[$_COOKIE['loggedon']])){
-            $string = $_COOKIE['loggedon'] . "," . $time . "\n";
-            fwrite($fp, $string);
-          }
-            fclose($fp);
-          }
-
-
 
 
           require_once("error.php");
           ?>
 </div>
         <div class="card-body">
+
+
           <div class="table-responsive">
+            <form method="post" action="?">
+              <input id="date" type="date" name="date">
+              <input type="submit" value="search" />
+            </form>
             <table class="table table-bordered dataTable" id="dataTable" style="width: 100%;" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
               <thead>
                 <tr>
@@ -216,8 +201,10 @@ if($midshipmen[$a]['Admin'] == 'no'){
               <tbody>
 <?php
 
-
-$date = date('d-m-Y');
+if(isset($_POST['date']))
+$date = $_POST['date'];
+else
+$date = date('Y-m-d');
 $file =  $date . ".csv";
 if(file_exists($file))
 $signedTaps = read_csv($file);
@@ -289,7 +276,7 @@ $company = $midshipmen[$key]['Company'] . "<sup>th</sup>";
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a href="login.php" class="btn btn-primary" onclick="eraseCookie('loggedon');">Logout</a>
           </div>
         </div>
       </div>
