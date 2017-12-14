@@ -19,6 +19,8 @@ require_once("lib_read_csv.php");
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/7/78/Navy_Athletics_logo.png">
+
   <script type="text/javascript" src="sha256.js"></script>
   <script type="text/javascript" src="cookie.js"></script>
 </head>
@@ -41,14 +43,14 @@ require_once("lib_read_csv.php");
           <div class="form-group">
             <div class="form-check">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox"> Remember Password</label>
+
               </div>
             </div>
             <input class="btn btn-primary btn-block"  type="submit" name="" value="Login">
           </form>
           <div class="text-center">
             <a class="d-block small mt-3" href="register.php">Register an Account</a>
-            <a class="d-block small" href="forgot-password.php">Forgot Password?</a>
+
           </div>
         </div>
       </div>
@@ -62,12 +64,12 @@ require_once("lib_read_csv.php");
       if($CSV[$_REQUEST['alpha']]['Password'] == hash('sha256', $_POST['password'])){
         $_SESSION['loggedon'] = $_POST['alpha'];
         setcookie("loggedon", $_POST['alpha'], time()+30*24*60*60, "/");
-        header('Location: index.php');
+        header('Location: dashboard.php');
       }
 
     }
     if(isset( $_COOKIE['loggedon'])){
-      header('Location: index.php');
+      header('Location: dashboard.php');
 
     }
 
@@ -79,12 +81,7 @@ require_once("lib_read_csv.php");
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <pre>
-      <?php
-      print_r($_SESSION);
-      print_r($_COOKIE);
-      ?>
-    </pre>
+    
   </body>
 
   </html>
