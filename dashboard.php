@@ -25,6 +25,7 @@
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+   <link rel="icon" href="https://2jsqmx3urpic3hm7hj2c4vvi-wpengine.netdna-ssl.com/files/Navy-crest1.png">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
