@@ -25,7 +25,7 @@
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
-   <link rel="icon" href="https://pbs.twimg.com/profile_images/829677274802839552/qw49Bjjl.jpg">
+   <link rel="icon" href="https://www.usna.edu/PAO/_files/images/faq_images/usnacrest.png">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
