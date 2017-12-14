@@ -62,12 +62,12 @@ require_once("lib_read_csv.php");
       if($CSV[$_REQUEST['alpha']]['Password'] == hash('sha256', $_POST['password'])){
         $_SESSION['loggedon'] = $_POST['alpha'];
         setcookie("loggedon", $_POST['alpha'], time()+30*24*60*60, "/");
-        header('Location: index.php');
+        header('Location: dashboard.php');
       }
 
     }
     if(isset( $_COOKIE['loggedon'])){
-      header('Location: index.php');
+      header('Location: dashboard.php');
 
     }
 
