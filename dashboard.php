@@ -25,7 +25,7 @@
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
-   <link rel="icon" href="https://cstest.s3.amazonaws.com/mb/2016/02/us-naval-academy-navy-logo.jpg">
+   <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/7/78/Navy_Athletics_logo.png">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
