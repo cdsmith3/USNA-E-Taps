@@ -104,7 +104,7 @@ require_once("error.php");
               </div>
             </div>
           </div>
-          <p id="wrong" class="text-dangerr">
+          <p id="wrong" class="alert alert-danger">
 
           </p>
           <input type="submit" class="btn btn-primary btn-block" name="" value="Register">
