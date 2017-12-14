@@ -8,7 +8,7 @@
         }
         $a = $_COOKIE['loggedon'];
 if($midshipmen[$a]['Admin'] == 'no'){
-  header('Location: index.php');
+  header('Location: dashboard.php');
 }
 
 
