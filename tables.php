@@ -185,7 +185,8 @@ if($midshipmen[$a]['Admin'] == 'no'){
           <div class="table-responsive">
             <form method="post" action="?">
               <input id="date" type="date" name="date">
-              <input type="submit" value="search" />
+              <input class='btn btn-primary'type="submit" value="Choose Date" />
+              <br><br><br>
             </form>
             <table class="table table-bordered dataTable" id="dataTable" style="width: 100%;" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
               <thead>
@@ -222,10 +223,10 @@ $company = $midshipmen[$key]['Company'] . "<sup>th</sup>";
   echo "<td>{$midshipmen[$key]['Year']}</td>";
   echo "<td>$company</td>";
   if(isset($signedTaps[$key]['Time'])){
-  echo "<td style='background-color:green;'>{$signedTaps[$key]['Time']}</td>";
+  echo "<td style='background-color:#33cc33;'>{$signedTaps[$key]['Time']}</td>";
 }
   else {
-    echo "<td style='background-color:red;'>No</td>";
+    echo "<td style='background-color:#ff5b5b;'>No</td>";
   }
   echo "</tr>";
 }
