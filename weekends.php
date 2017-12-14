@@ -183,10 +183,7 @@ if($midshipmen[$a]['Admin'] == 'no'){
 
 
           <div class="table-responsive">
-            <form method="post" action="?">
-              <input id="date" type="date" name="date">
-              <input type="submit" value="search" />
-            </form>
+
             <table class="table table-bordered dataTable" id="dataTable" style="width: 100%;" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
               <thead>
                 <tr>
@@ -195,7 +192,6 @@ if($midshipmen[$a]['Admin'] == 'no'){
                   <th>Phone Number</th>
                   <th>Year</th>
                   <th>Company</th>
-
                   <th>Approved</th>
                 </tr>
               </thead>
@@ -203,9 +199,7 @@ if($midshipmen[$a]['Admin'] == 'no'){
               <tbody>
 <?php
 
-if(isset($_POST['date']))
-$date = $_POST['date'];
-else
+
 $date = date('W');
 $file =  $date . ".csv";
 if(file_exists($file))
@@ -298,6 +292,10 @@ $company = $midshipmen[$key]['Company'] . "<sup>th</sup>";
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
   </div>
+  <form method='post' action='?' id="myform">
+      <input id="user" type='hidden' name='approved' />
+    </form>"
 </body>
 
 </html>
+/
