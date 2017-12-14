@@ -202,14 +202,14 @@ if($_COOKIE['loggedon'] != 111111){
 
             if (!file_exists($filename)){
               $fp = fopen($filename, 'a');
-              $string = "Alpha,Time\n";
+              $string = "Alpha,Requested,Approved\n";
               fwrite($fp, $string);
             }else{
               $fp = fopen($filename, 'a');
             }
             $signedTaps = read_csv($filename);
             if(!isset($signedTaps[$_COOKIE['loggedon']])){
-            $string = $_COOKIE['loggedon'] . "," . "yes" . "\n";
+            $string = $_COOKIE['loggedon'] . "," . "yes" . ",no" . "\n";
             fwrite($fp, $string);
           }
             fclose($fp);
@@ -225,9 +225,41 @@ if($_COOKIE['loggedon'] != 111111){
           <?php
           $date = date('Y-m-d');
           $file =  $date . ".csv";
+          $file2 = date('W') . ".csv";
+          if(file_exists($file2)){
+          $weekend = read_csv($file2);
+          if(!isset($weekend[$_COOKIE['loggedon']])){
+            echo "<p>
+            You have not requested a weekend.
+            </p>";
+          }else{
+          if((date('D') == "Fri" || date('D') == "Sat") && $weekend[$_COOKIE['loggedon']]['Approved'] == "yes"){
+            echo "<p>
+            Your Weekend has been approved.
+            </p>";
+          }else {
+            echo "<p>
+            Your Weekend has not been approved.
+            </p>";
+          }
+        }
+        }else{
+          echo "<p>
+          You have not requested a weekend.
+          </p>";
+        }
+
           if(file_exists($file)){
           $signedTaps = read_csv($file);
+
+
           if(isset($signedTaps[$_COOKIE['loggedon']]['Time'])){
+          echo "<p>
+          You Signed Taps today at {$signedTaps[$_COOKIE['loggedon']]['Time']}
+          </p>";
+        }else if(file_exists($file2)){
+          $signedTaps = read_csv($file2);
+          if(isset($signedTaps[$_COOKIE['loggedon']]['Weekend'])){
           echo "<p>
           You Signed Taps at {$signedTaps[$_COOKIE['loggedon']]['Time']}
           </p>";
@@ -239,7 +271,7 @@ if($_COOKIE['loggedon'] != 111111){
         }
         }
 
-
+}
           ?>
           <p>When you signed taps</p>
           <p>.</p>
