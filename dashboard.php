@@ -151,12 +151,12 @@
 if($_COOKIE['loggedon'] != 111111){
   echo "  <form method='post' action='?'>
       <input type='hidden' name='signed' value='true' />
-      <input type='submit' name='login' value='sign taps' />
+      <input class='btn btn-primary' type='submit' name='login' value='sign taps' />
     </form>"
     ;
     echo "  <form method='post' action='?'>
         <input type='hidden' name='weekend' value='true' />
-        <input type='submit' name='login' value='Take Weekend' />
+        <input class='btn btn-primary' type='submit' name='login' value='Take Weekend' />
       </form>";
 }
           ?>

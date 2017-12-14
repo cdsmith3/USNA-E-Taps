@@ -197,7 +197,7 @@ require_once("error.php");
         ?>
         <div class="text-center">
           <a class="d-block small mt-3" href="login.php">Login Page</a>
-        
+
         </div>
       </div>
     </div>
@@ -207,11 +207,7 @@ require_once("error.php");
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-  <pre>
-    <?php
-    print_r($_POST);
-    ?>
-  </pre>
+  
 </body>
 
 </html>
