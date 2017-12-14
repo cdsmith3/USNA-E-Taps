@@ -25,6 +25,7 @@
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+   <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/7/78/Navy_Athletics_logo.png">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -140,7 +141,7 @@
         <li class="breadcrumb-item">
           <a href="dashboard.php">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">Blank Page</li>
+        <li class="breadcrumb-item active">Welcome</li>
       </ol>
       <div class="row">
         <div class="col-12">
@@ -150,12 +151,12 @@
 if($_COOKIE['loggedon'] != 111111){
   echo "  <form method='post' action='?'>
       <input type='hidden' name='signed' value='true' />
-      <input type='submit' name='login' value='sign taps' />
+      <input class='btn btn-primary' type='submit' name='login' value='sign taps' />
     </form>"
     ;
     echo "  <form method='post' action='?'>
         <input type='hidden' name='weekend' value='true' />
-        <input type='submit' name='login' value='Take Weekend' />
+        <input class='btn btn-primary' type='submit' name='login' value='Take Weekend' />
       </form>";
 }
           ?>
@@ -205,7 +206,17 @@ if($_COOKIE['loggedon'] != 111111){
 
 
           ?>
-          <p>Your profile info (name, company, rank, class etc)</p>
+          <br><p>Your profile info (name, company, rank, class etc)</p>
+          <br><p>Midshipman <?php
+
+          if($midshipmen[$_COOKIE['loggedon']]['']== 2019){
+            echo "2/C";
+          }
+
+
+
+           ?></p>
+
           <?php
           $date = date('d-m-Y');
           $file =  $date . ".csv";
