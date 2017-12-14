@@ -41,14 +41,14 @@ require_once("lib_read_csv.php");
           <div class="form-group">
             <div class="form-check">
               <label class="form-check-label">
-                <input class="form-check-input" type="checkbox"> Remember Password</label>
+              
               </div>
             </div>
             <input class="btn btn-primary btn-block"  type="submit" name="" value="Login">
           </form>
           <div class="text-center">
             <a class="d-block small mt-3" href="register.php">Register an Account</a>
-            <a class="d-block small" href="forgot-password.php">Forgot Password?</a>
+
           </div>
         </div>
       </div>
