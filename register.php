@@ -123,7 +123,7 @@ require_once("error.php");
 
           // Checks if anything was actually entered on submit
           if(first.value == "" || last.value == "" || alpha.value == "" || password.value == "" || passwordconf.value == "" || password.value.length < 8 || passwordconf.value != password.value || !alpha.value.match(/^[0-9]+$/)) {
-
+            echo "Fill in all forms!";
             return false;
           }else{
             return true;
@@ -207,7 +207,7 @@ require_once("error.php");
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-  
+
 </body>
 
 </html>
