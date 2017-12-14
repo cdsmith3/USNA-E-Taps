@@ -3,14 +3,15 @@
         require_once("error.php");
         session_start();
         $midshipmen = read_csv('users.csv');
+        if(!isset($_COOKIE['loggedon'])) {
+          header('Location: login.php');
+        }
         $a = $_COOKIE['loggedon'];
 if($midshipmen[$a]['Admin'] == 'no'){
   header('Location: index.php');
 }
 
-if(!isset($_COOKIE['loggedon'])) {
-  header('Location: login.php');
-}
+
 
 ?>
 <html lang="en">
