@@ -124,7 +124,7 @@
 
             // Checks if anything was actually entered on submit
             if(first.value == "" || last.value == "" || alpha.value == "" || password.value == "" || passwordconf.value == "" || password.value.length < 8 || passwordconf.value != password.value || !alpha.value.match(/^[0-9]+$/)) {
-              document.getElementById('wrong').innerHTML = "<div class='alert alert-danger' data-dismiss='alert' aria-label='close'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Danger!</strong> This alert box could indicate a dangerous or potentially negative action.</div> ";
+              document.getElementById('wrong').innerHTML = "<div class='alert alert-danger' data-dismiss='alert' aria-label='close'> <a href='#' class='close' data-dismiss='alert' aria-label='close'>×</a> <strong>Warning!</strong> You must fill in all user information!</div> ";
               return false;
             }else{
               return true;
