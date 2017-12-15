@@ -90,18 +90,43 @@
           <h1>Welcome <?php echo "{$midshipmen[$_COOKIE['loggedon']]['First']}"; ?>!</h1>
           <?php
 if($_COOKIE['loggedon'] != 111111){
-  echo "  <form method='post' action='?'>
+
+
+  echo "
+  <body class='bg-dark' style='text-align:center; '>
+    <div class='container' align = 'center'>
+      <div class='card card-register mx-auto mt-5'>
+        <div class='card-header'>Check in for the night</div>
+        <div class='card-body'>
+<div class'btn-group'>
+  <div class='form-row'>
+
+  <div class='col-md-6'>
+
+  <form method='post' action='?'>
       <input type='hidden' name='signed' value='true' />
       <input class='btn btn-primary' type='submit' name='login' value='sign taps' />
-    </form>"
+    </form>
+    </div>
+      "
     ;
-    echo "  <form method='post' action='?'>
+    echo "
+    <div class='col-md-6'>
+    <form method='post' action='?'>
         <input type='hidden' name='weekend' value='true' />
-        <input class='btn btn-primary' type='submit' name='login' value='Take Weekend' />
-      </form>";
+        <input class='btn btn-primary' type='submit' name='login' value='Request Weekend' />
+      </form>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </body>";
 
 
-
+      echo "<br><br>";
       if($midshipmen[$_COOKIE['loggedon']]['Year']== '2019'){
         echo "<br><p>Midshipman 2/C";
       } else if ($midshipmen[$_COOKIE['loggedon']]['Year']== '2018'){
