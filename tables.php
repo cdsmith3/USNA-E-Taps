@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <?php   require_once("lib_read_csv.php");
-        require_once("error.php");
-        session_start();
-        $midshipmen = read_csv('users.csv');
-        if(!isset($_COOKIE['loggedon'])) {
-          header('Location: login.php');
-        }
-        $a = $_COOKIE['loggedon'];
+require_once("error.php");
+session_start();
+$midshipmen = read_csv('users.csv');
+if(!isset($_COOKIE['loggedon'])) {
+  header('Location: login.php');
+}
+$a = $_COOKIE['loggedon'];
 if($midshipmen[$a]['Admin'] == 'no'){
   header('Location: dashboard.php');
 }
@@ -36,16 +36,16 @@ if($midshipmen[$a]['Admin'] == 'no'){
 
   <script type="text/javascript">
   function goForm(formElement) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-       document.getElementById("demo").innerHTML = xhttp.responseText;
-    }
-  };
-  xhttp.open(formElement.method, formElement.action, true);
-  xhttp.send(new FormData (formElement));
-  return false;
-}
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("demo").innerHTML = xhttp.responseText;
+      }
+    };
+    xhttp.open(formElement.method, formElement.action, true);
+    xhttp.send(new FormData (formElement));
+    return false;
+  }
 
   </script>
 </head>
@@ -91,171 +91,171 @@ if($midshipmen[$a]['Admin'] == 'no'){
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-  <div class="content-wrapper">
-    <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          
-        </li>
-        <li class="breadcrumb-item active">Tracker</li>
-      </ol>
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
 
-      <!-- Example DataTables Card-->
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fa fa-table"></i> TAPS Tracker</div>
-          <div class="col-sm-1 col-md-1">
+          </li>
+          <li class="breadcrumb-item active">Tracker</li>
+        </ol>
 
-
-          <?php
-          $CSV = read_csv('users.csv');
+        <!-- Example DataTables Card-->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fa fa-table"></i> TAPS Tracker</div>
+            <div class="col-sm-1 col-md-1">
 
 
-          require_once("error.php");
-          ?>
-</div>
-        <div class="card-body">
+              <?php
+              $CSV = read_csv('users.csv');
 
 
-          <div class="table-responsive">
-            <form method="post" action="?">
-              <input id="date" type="date" name="date">
-              <input class='btn btn-primary'type="submit" value="Choose Date" />
-              <br><br><br>
-            </form>
-
-            <table class="table table-bordered dataTable" id="dataTable" style="width: 100%;" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Alpha</th>
-                  <th>Phone Number</th>
-                  <th>Year</th>
-                  <th>Company</th>
-                  <th>Signed Taps/Weekend</th>
-                </tr>
-              </thead>
-
-              <tbody>
-<?php
-
-if(isset($_POST['date'])){
-$date = $_POST['date'];
-$timestamp = strtotime($date);
-
-$day = date('D', $timestamp);
-$week = date("W", $timestamp);
-
-}
-else{
-$date = date('Y-m-d');
-$day = date('D');
-$week = date("W");
-}
-
-if(file_exists($week . ".csv"))
-$weekendList = read_csv($week . ".csv");
-
-$file =  $date . ".csv";
-if(file_exists($file))
-$signedTaps = read_csv($file);
+              require_once("error.php");
+              ?>
+            </div>
+            <div class="card-body">
 
 
-foreach ($midshipmen as $key => $value) {
-  if($midshipmen[$key]['Admin'] == 'no'){
-echo "<tr role='row'>";
-$name = $midshipmen[$key]['First'] . " " . $midshipmen[$key]['Last'];
-$company = $midshipmen[$key]['Company'] . "<sup>th</sup>";
-  echo "<td>$name</td>";
-  echo "<td>$key</td>";
-  echo "<td>{$midshipmen[$key]['Phone Number']}</td>";
-  echo "<td>{$midshipmen[$key]['Year']}</td>";
-  echo "<td>$company</td>";
+              <div class="table-responsive">
+                <form method="post" action="?">
+                  <input id="date" type="date" name="date">
+                  <input class='btn btn-primary'type="submit" value="Choose Date" />
+                  <br><br><br>
+                </form>
 
-  if((($day == "Fri" && ($midshipmen[$key]['Year'] == 2019 || $midshipmen[$key]['Year'] == 2018)) || $day == "Sat") && isset($weekendList[$key]['Requested']) && $weekendList[$key]['Approved'] == "yes"){
-    echo "<td style='background-color:#33cc33;'>Weekend</td>";
-  }else{
-  if(isset($signedTaps[$key]['Time'])){
-  echo "<td style='background-color:#33cc33;'>{$signedTaps[$key]['Time']}</td>";
-}
-  else {
-    echo "<td style='background-color:#ff5b5b;'>No</td>";
-  }
-}
-  echo "</tr>";
-}
-}
+                <table class="table table-bordered dataTable" id="dataTable" style="width: 100%;" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Alpha</th>
+                      <th>Phone Number</th>
+                      <th>Year</th>
+                      <th>Company</th>
+                      <th>Signed Taps/Weekend</th>
+                    </tr>
+                  </thead>
 
-?>
+                  <tbody>
+                    <?php
 
-              </tbody>
-            </table>
+                    if(isset($_POST['date'])){
+                      $date = $_POST['date'];
+                      $timestamp = strtotime($date);
+
+                      $day = date('D', $timestamp);
+                      $week = date("W", $timestamp);
+
+                    }
+                    else{
+                      $date = date('Y-m-d');
+                      $day = date('D');
+                      $week = date("W");
+                    }
+
+                    if(file_exists($week . ".csv"))
+                    $weekendList = read_csv($week . ".csv");
+
+                    $file =  $date . ".csv";
+                    if(file_exists($file))
+                    $signedTaps = read_csv($file);
+
+
+                    foreach ($midshipmen as $key => $value) {
+                      if($midshipmen[$key]['Admin'] == 'no'){
+                        echo "<tr role='row'>";
+                        $name = $midshipmen[$key]['First'] . " " . $midshipmen[$key]['Last'];
+                        $company = $midshipmen[$key]['Company'] . "<sup>th</sup>";
+                        echo "<td>$name</td>";
+                        echo "<td>$key</td>";
+                        echo "<td>{$midshipmen[$key]['Phone Number']}</td>";
+                        echo "<td>{$midshipmen[$key]['Year']}</td>";
+                        echo "<td>$company</td>";
+
+                        if((($day == "Fri" && ($midshipmen[$key]['Year'] == 2019 || $midshipmen[$key]['Year'] == 2018)) || $day == "Sat") && isset($weekendList[$key]['Requested']) && $weekendList[$key]['Approved'] == "yes"){
+                          echo "<td style='background-color:#33cc33;'>Weekend</td>";
+                        }else{
+                          if(isset($signedTaps[$key]['Time'])){
+                            echo "<td style='background-color:#33cc33;'>{$signedTaps[$key]['Time']}</td>";
+                          }
+                          else {
+                            echo "<td style='background-color:#ff5b5b;'>No</td>";
+                          }
+                        }
+                        echo "</tr>";
+                      }
+                    }
+
+                    ?>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
           </div>
         </div>
+        <script type="text/javascript">
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("demo").innerHTML = xhttp.responseText;
+          }
+        };
+        xhttp.open("GET", "docs/xmlhttprequest.php", true);
+        xhttp.send();
 
-      </div>
-    </div>
-    <script type="text/javascript">
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-           document.getElementById("demo").innerHTML = xhttp.responseText;
-        }
-    };
-    xhttp.open("GET", "docs/xmlhttprequest.php", true);
-    xhttp.send();
-
-    </script>
-    <!-- /.container-fluid-->
-    <!-- /.content-wrapper-->
-    <footer class="sticky-footer">
-      <div class="container">
-        <div class="text-center">
-          <small>Copyright © RoughRiderNet</small>
-        </div>
-      </div>
-    </footer>
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fa fa-angle-up"></i>
-    </a>
-    <!-- Logout Modal-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
+        </script>
+        <!-- /.container-fluid-->
+        <!-- /.content-wrapper-->
+        <footer class="sticky-footer">
+          <div class="container">
+            <div class="text-center">
+              <small>Copyright © RoughRiderNet</small>
+            </div>
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a href="login.php" class="btn btn-primary" onclick="eraseCookie('loggedon');">Logout</a>
+        </footer>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+          <i class="fa fa-angle-up"></i>
+        </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a href="login.php" class="btn btn-primary" onclick="eraseCookie('loggedon');">Logout</a>
+              </div>
+            </div>
           </div>
         </div>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Page level plugin JavaScript-->
+        <script src="vendor/datatables/jquery.dataTables.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin.min.js"></script>
+        <!-- Custom scripts for this page-->
+        <script src="js/sb-admin-datatables.min.js"></script>
       </div>
-    </div>
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Page level plugin JavaScript-->
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
-    <!-- Custom scripts for this page-->
-    <script src="js/sb-admin-datatables.min.js"></script>
-  </div>
-</body>
+    </body>
 
-</html>
+    </html>
