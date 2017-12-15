@@ -80,7 +80,7 @@
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="dashboard.php">Dashboard</a>
+          
         </li>
         <li class="breadcrumb-item active">Dashboard</li>
       </ol>
@@ -193,6 +193,7 @@ echo "
 
           ?>
           <br><br><p>Your profile info (name, company, rank, class etc)</p>
+          Alpha,First,Last,Company,Year,Password,Phone Number,Admin
 
 
           <?php
@@ -207,13 +208,13 @@ echo "
             You have not requested a weekend.
             </p>";
           }else{
-          if((date('D') == "Fri" || date('D') == "Sat") && $weekend[$_COOKIE['loggedon']]['Approved'] == "yes"){
+          if($weekend[$_COOKIE['loggedon']]['Approved'] == "yes"){
             echo "<p>
-            Your Weekend has been approved.
+            Your weekend has been approved.
             </p>";
           }else {
             echo "<p>
-            Your Weekend has not been approved.
+            Your weekend has not been approved.
             </p>";
           }
         }
