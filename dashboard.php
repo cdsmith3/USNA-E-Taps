@@ -82,10 +82,10 @@
         <li class="breadcrumb-item">
           <a href="dashboard.php">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">Welcome</li>
+        <li class="breadcrumb-item active">Dashboard</li>
       </ol>
       <div class="row">
-        <div class="col-12">
+        <div class="col-12" style='text-align:center; '>
 
           <h1>Welcome <?php echo "{$midshipmen[$_COOKIE['loggedon']]['First']}"; ?>!</h1>
           <?php
@@ -93,10 +93,25 @@ if($_COOKIE['loggedon'] != 111111){
 
 
   echo "
-  <body class='bg-dark' style='text-align:center; '>
-    <div class='container' align = 'center'>
+  <body class='bg-dark' >
+    <div class='container' style='text-align:center; '>
       <div class='card card-register mx-auto mt-5'>
-        <div class='card-header'>Check in for the night</div>
+        <div class='card-header'>
+
+";
+        if($midshipmen[$_COOKIE['loggedon']]['Year']== '2019'){
+          echo "2/C";
+        } else if ($midshipmen[$_COOKIE['loggedon']]['Year']== '2018'){
+          echo "1/C";
+        } else if ($midshipmen[$_COOKIE['loggedon']]['Year']== '2021'){
+          echo "4/C";
+        } else if ($midshipmen[$_COOKIE['loggedon']]['Year']== '2020'){
+          echo "3/C";
+        }
+
+echo "
+{$midshipmen[$_COOKIE['loggedon']]['Last']}
+        </div>
         <div class='card-body'>
 <div class'btn-group'>
   <div class='form-row'>
@@ -105,7 +120,7 @@ if($_COOKIE['loggedon'] != 111111){
 
   <form method='post' action='?'>
       <input type='hidden' name='signed' value='true' />
-      <input class='btn btn-primary' type='submit' name='login' value='sign taps' />
+      <input class='btn btn-primary' type='submit' name='login' value='Sign Taps' />
     </form>
     </div>
       "
@@ -123,20 +138,12 @@ if($_COOKIE['loggedon'] != 111111){
       </div>
       </div>
       </div>
+      </div>
       </body>";
 
 
-      echo "<br><br>";
-      if($midshipmen[$_COOKIE['loggedon']]['Year']== '2019'){
-        echo "<br><p>Midshipman 2/C";
-      } else if ($midshipmen[$_COOKIE['loggedon']]['Year']== '2018'){
-        echo "<br><p>Midshipman 1/C";
-      } else if ($midshipmen[$_COOKIE['loggedon']]['Year']== '2021'){
-        echo "<br><p>Midshipman 4/C";
-      } else if ($midshipmen[$_COOKIE['loggedon']]['Year']== '2020'){
-        echo "<br><p>Midshipman 3/C";
-      }
-       echo "</p>";
+
+
 }
           ?>
 
@@ -185,7 +192,7 @@ if($_COOKIE['loggedon'] != 111111){
 
 
           ?>
-          <br><p>Your profile info (name, company, rank, class etc)</p>
+          <br><br><p>Your profile info (name, company, rank, class etc)</p>
 
 
           <?php
