@@ -151,7 +151,7 @@ $timestamp = strtotime($date);
 
 $day = date('D', $timestamp);
 $week = date("W", $timestamp);
-echo "$week";
+
 }
 else{
 $date = date('Y-m-d');
