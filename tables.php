@@ -1,3 +1,4 @@
+<!--  CONTAINS ALL CODE FOR "TRACKER" TAB -->
 <!DOCTYPE html>
 <?php   require_once("lib_read_csv.php");
 require_once("error.php");
@@ -10,7 +11,8 @@ $a = $_COOKIE['loggedon'];
 if($midshipmen[$a]['Admin'] == 'no'){
   header('Location: dashboard.php');
 }
-
+// read in all relevant files, if somewhere your status (admin vs user)
+// does not allow, redirect to login page
 
 
 ?>
@@ -53,7 +55,7 @@ if($midshipmen[$a]['Admin'] == 'no'){
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="dashboard.php">E-Taps</a>
+    <a class="navbar-brand" href="dashboard.php">&#128013;  E-Taps</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -129,7 +131,7 @@ if($midshipmen[$a]['Admin'] == 'no'){
                   <input class='btn btn-primary'type="submit" value="Choose Date" />
                   <br><br><br>
                 </form>
-
+<!-- categories for table -->
                 <table class="table table-bordered dataTable" id="dataTable" style="width: 100%;" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
                   <thead>
                     <tr>
@@ -167,25 +169,25 @@ if($midshipmen[$a]['Admin'] == 'no'){
                     $signedTaps = read_csv($file);
 
 
-                    foreach ($midshipmen as $key => $value) {
-                      if($midshipmen[$key]['Admin'] == 'no'){
+                    foreach ($midshipmen as $key => $value) { // go through mids
+                      if($midshipmen[$key]['Admin'] == 'no'){ // if not admin,
                         echo "<tr role='row'>";
-                        $name = $midshipmen[$key]['First'] . " " . $midshipmen[$key]['Last'];
-                        $company = $midshipmen[$key]['Company'] . "<sup>th</sup>";
-                        echo "<td>$name</td>";
+                        $name = $midshipmen[$key]['First'] . " " . $midshipmen[$key]['Last']; // get name
+                        $company = $midshipmen[$key]['Company'] . "<sup>th</sup>"; // get company
+                        echo "<td>$name</td>"; // print relevant info
                         echo "<td>$key</td>";
-                        echo "<td>{$midshipmen[$key]['Phone Number']}</td>";
-                        echo "<td>{$midshipmen[$key]['Year']}</td>";
-                        echo "<td>$company</td>";
+                        echo "<td>{$midshipmen[$key]['Phone Number']}</td>"; // phone number
+                        echo "<td>{$midshipmen[$key]['Year']}</td>";  //class year
+                        echo "<td>$company</td>"; // company
 
                         if((($day == "Fri" && ($midshipmen[$key]['Year'] == 2019 || $midshipmen[$key]['Year'] == 2018)) || $day == "Sat") && isset($weekendList[$key]['Requested']) && $weekendList[$key]['Approved'] == "yes"){
-                          echo "<td style='background-color:#33cc33;'>Weekend</td>";
+                          echo "<td style='background-color:#33cc33;'>Weekend</td>"; // if on weekend and approved
                         }else{
                           if(isset($signedTaps[$key]['Time'])){
-                            echo "<td style='background-color:#33cc33;'>{$signedTaps[$key]['Time']}</td>";
+                            echo "<td style='background-color:#33cc33;'>{$signedTaps[$key]['Time']}</td>"; // if signed taps
                           }
                           else {
-                            echo "<td style='background-color:#ff5b5b;'>No</td>";
+                            echo "<td style='background-color:#ff5b5b;'>No</td>"; // if not signed taps
                           }
                         }
                         echo "</tr>";
@@ -235,7 +237,13 @@ if($midshipmen[$a]['Admin'] == 'no'){
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
-              <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+
+              <?php if($_COOKIE['loggedon'] != 123456){
+              echo "<div class='modal-body'>Make sure <strong>you</strong> signed TAPS! &#128013;</div>";
+            } else {
+              echo "<div class='modal-body'>Remember to enter <strong>all</strong> UA's into MIDS! &#128013;</div>";
+            }
+              ?>
               <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <a href="login.php" class="btn btn-primary" onclick="eraseCookie('loggedon');">Logout</a>

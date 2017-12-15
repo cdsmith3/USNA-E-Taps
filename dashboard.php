@@ -1,3 +1,4 @@
+<!-- CONTAINS INFO FOR MAIN USER DASHBOARD-->
 <!DOCTYPE html>
 <?php   require_once("lib_read_csv.php");
 require_once("error.php");
@@ -6,6 +7,8 @@ $midshipmen = read_csv('users.csv');
 if(!isset($_COOKIE['loggedon'])) {
   header('Location: login.php');
 }
+// read in all relevant files, if somewhere your status (admin vs user)
+// does not allow, redirect to login page
 ?>
 
 
@@ -31,7 +34,7 @@ if(!isset($_COOKIE['loggedon'])) {
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="dashboard.php">E-Taps</a>
+    <a class="navbar-brand" href="dashboard.php">&#128013;  E-Taps</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -397,7 +400,12 @@ if(!isset($_COOKIE['loggedon'])) {
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <?php if($_COOKIE['loggedon'] != 123456){
+            echo "<div class='modal-body'>Make sure <strong>you</strong> signed TAPS! &#128013;</div>";
+          } else {
+            echo "<div class='modal-body'>Remember to enter <strong>all</strong> UA's into MIDS! &#128013;</div>";
+          }
+            ?>
             <div class="modal-footer">
               <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
               <a href="login.php" class="btn btn-primary" onclick="eraseCookie('loggedon');">Logout</a>

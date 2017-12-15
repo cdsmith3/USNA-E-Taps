@@ -1,3 +1,4 @@
+<!-- CONTAINS ALL INFO FOR WEEKEND TAB -->
 <!DOCTYPE html>
 <?php   require_once("lib_read_csv.php");
 require_once("error.php");
@@ -10,9 +11,8 @@ $a = $_COOKIE['loggedon'];
 if($midshipmen[$a]['Admin'] == 'no'){
   header('Location: dashboard.php');
 }
-
-
-
+// read in all relevant files, if somewhere your status (admin vs user)
+// does not allow, redirect to login page
 ?>
 <html lang="en">
 
@@ -49,7 +49,7 @@ if($midshipmen[$a]['Admin'] == 'no'){
 
   function appWeekend(alpha){
 
-    document.getElementById("user").value = alpha;
+    document.getElementById("user").value = alpha; //update alpha
     document.getElementById("myform").submit();
   }
 
@@ -59,7 +59,7 @@ if($midshipmen[$a]['Admin'] == 'no'){
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="dashboard.php">E-Taps</a>
+    <a class="navbar-brand" href="dashboard.php">&#128013;  E-Taps</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -121,10 +121,10 @@ if($midshipmen[$a]['Admin'] == 'no'){
 
 
               <?php
-              $CSV = read_csv('users.csv');
+              $CSV = read_csv('users.csv'); //read in users and information
 
 
-              require_once("error.php");
+              require_once("error.php");  //LCDR Kenney's PHP error checker
               ?>
             </div>
             <div class="card-body">
@@ -154,7 +154,7 @@ if($midshipmen[$a]['Admin'] == 'no'){
                   } else {
                     return False;
                   }
-                }
+                } //WRITE CSV FROM LCDR KENNEY
 
                 $date = date('W');
                 $file =  $date . ".csv";
@@ -162,15 +162,16 @@ if($midshipmen[$a]['Admin'] == 'no'){
                 $signedTaps = read_csv($file);
 
 
-                if(isset($_POST['approved'])){
-                  $signedTaps[$_POST['approved']]['Approved'] = "yes";
-                  write_csv($file,$signedTaps);
-                  unset($_POST['approved']);
+                if(isset($_POST['approved'])){ // IF APPROVED IS SET (CLICKED USER)
+                  $signedTaps[$_POST['approved']]['Approved'] = "yes"; // APPROVED SET TO YES
+                  write_csv($file,$signedTaps); //WRITE THIS TO SIGNED TAPS
+                  unset($_POST['approved']); // UNSET APPROVED
                 }
                 ?>
                 <table class="table table-bordered dataTable" id="dataTable" style="width: 100%;" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
                   <thead>
                     <tr>
+                      <!--  PRINT CATEGORIES-->
                       <th>Name</th>
                       <th>Alpha</th>
                       <th>Phone Number</th>
@@ -186,23 +187,23 @@ if($midshipmen[$a]['Admin'] == 'no'){
 
 
                     ksort($midshipmen);
-                    foreach ($midshipmen as $key => $value) {
+                    foreach ($midshipmen as $key => $value) { // LOOK THROUGH MIDS' INFO IN FILE
                       if($midshipmen[$key]['Admin'] == 'no'){
                         echo "<tr role='row'>";
-                        $name = $midshipmen[$key]['First'] . " " . $midshipmen[$key]['Last'];
+                        $name = $midshipmen[$key]['First'] . " " . $midshipmen[$key]['Last']; // GRAB NAME AND INFO
                         if(isset($signedTaps[$key]['Requested'])){
                           $company = $midshipmen[$key]['Company'] . "<sup>th</sup>";
                           echo "<td>$name</td>";
                           echo "<td >$key</td>";
-                          echo "<td>{$midshipmen[$key]['Phone Number']}</td>";
+                          echo "<td>{$midshipmen[$key]['Phone Number']}</td>"; // PRINT ALL RELEVANT INFO
                           echo "<td>{$midshipmen[$key]['Year']}</td>";
                           echo "<td>$company</td>";
 
                           if(isset($signedTaps[$key]['Approved']) && $signedTaps[$key]['Approved'] == "yes"){
-                            echo "<td onclick='appWeekend($key);' style='background-color:#33cc33;'>Yes</td>";
+                            echo "<td onclick='appWeekend($key);' style='background-color:#33cc33;'>Yes</td>"; //IF WEEKEND APPROVED
                           }
                           else {
-                            echo "<td onclick='appWeekend($key);' style='background-color:#ff5b5b;'>No</td>";
+                            echo "<td onclick='appWeekend($key);' style='background-color:#ff5b5b;'>No</td>"; //IF WEEKEND NOT APPROVED
                           }
                           echo "</tr>";
                         }
@@ -251,7 +252,12 @@ if($midshipmen[$a]['Admin'] == 'no'){
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
-              <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+              <?php if($_COOKIE['loggedon'] != 123456){
+              echo "<div class='modal-body'>Make sure <strong>you</strong> signed TAPS! &#128013;</div>";
+            } else {
+              echo "<div class='modal-body'>Remember to enter <strong>all</strong> UA's into MIDS! &#128013;</div>";
+            }
+              ?>
               <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <a href="login.php" class="btn btn-primary" onclick="eraseCookie('loggedon');">Logout</a>
