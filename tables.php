@@ -129,6 +129,7 @@ if($midshipmen[$a]['Admin'] == 'no'){
               <input class='btn btn-primary'type="submit" value="Choose Date" />
               <br><br><br>
             </form>
+
             <table class="table table-bordered dataTable" id="dataTable" style="width: 100%;" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
               <thead>
                 <tr>
@@ -144,15 +145,28 @@ if($midshipmen[$a]['Admin'] == 'no'){
               <tbody>
 <?php
 
-if(isset($_POST['date']))
+if(isset($_POST['date'])){
 $date = $_POST['date'];
-else
+$timestamp = strtotime($date);
+
+$day = date('D', $timestamp);
+$week = date("W", $timestamp);
+echo "$week";
+}
+else{
 $date = date('Y-m-d');
+$day = date('D');
+$week = date("W");
+}
+
+if(file_exists($week . ".csv"))
+$weekendList = read_csv($week . ".csv");
+
 $file =  $date . ".csv";
 if(file_exists($file))
 $signedTaps = read_csv($file);
 
-ksort($midshipmen);
+
 foreach ($midshipmen as $key => $value) {
   if($midshipmen[$key]['Admin'] == 'no'){
 echo "<tr role='row'>";
@@ -163,12 +177,17 @@ $company = $midshipmen[$key]['Company'] . "<sup>th</sup>";
   echo "<td>{$midshipmen[$key]['Phone Number']}</td>";
   echo "<td>{$midshipmen[$key]['Year']}</td>";
   echo "<td>$company</td>";
+
+  if((($day == "Fri" && ($midshipmen[$key]['Year'] == 2019 || $midshipmen[$key]['Year'] == 2018)) || $day == "Sat") && isset($weekendList[$key]['Requested']) && $weekendList[$key]['Approved'] == "yes"){
+    echo "<td style='background-color:#33cc33;'>Weekend</td>";
+  }else{
   if(isset($signedTaps[$key]['Time'])){
   echo "<td style='background-color:#33cc33;'>{$signedTaps[$key]['Time']}</td>";
 }
   else {
     echo "<td style='background-color:#ff5b5b;'>No</td>";
   }
+}
   echo "</tr>";
 }
 }

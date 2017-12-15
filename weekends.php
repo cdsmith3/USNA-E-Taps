@@ -47,6 +47,12 @@ if($midshipmen[$a]['Admin'] == 'no'){
   return false;
 }
 
+function appWeekend(alpha){
+
+  document.getElementById("user").value = alpha;
+  document.getElementById("myform").submit();
+}
+
   </script>
 </head>
 
@@ -88,7 +94,7 @@ if($midshipmen[$a]['Admin'] == 'no'){
       </ul>
       <ul class="navbar-nav ml-auto">
 
-        
+
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
@@ -125,7 +131,43 @@ if($midshipmen[$a]['Admin'] == 'no'){
 
 
           <div class="table-responsive">
+<?php
+function write_csv($filename, $data=array(), $withHeaders=True, $withLeftID=True, $leftID='', $withDelimiter=',') {
+    if ($fp = fopen($filename, 'w+')) {
+      $headers = array_keys($data[array_keys($data)[0]]);
+      if ($withHeaders) {
+        if ($withLeftID && $leftID != '') {
+          $headers = array_diff($headers, array($leftID));
+          array_unshift($headers, $leftID);
+        }
+        fputcsv($fp, $headers, $withDelimiter);
+      }
+      foreach ($data as $i => $row) {
+        $line = array();
+        foreach ($headers as $key) {
+          $line[] = $row[$key];
+        }
+        fputcsv($fp, $line, $withDelimiter);
+      }
+      fclose($fp);
+      return True;
+    } else {
+      return False;
+    }
+  }
 
+$date = date('W');
+$file =  $date . ".csv";
+if(file_exists($file))
+$signedTaps = read_csv($file);
+
+
+if(isset($_POST['approved'])){
+  $signedTaps[$_POST['approved']]['Approved'] = "yes";
+  write_csv($file,$signedTaps);
+  unset($_POST['approved']);
+}
+?>
             <table class="table table-bordered dataTable" id="dataTable" style="width: 100%;" cellspacing="0" role="grid" aria-describedby="dataTable_info" >
               <thead>
                 <tr>
@@ -142,10 +184,6 @@ if($midshipmen[$a]['Admin'] == 'no'){
 <?php
 
 
-$date = date('W');
-$file =  $date . ".csv";
-if(file_exists($file))
-$signedTaps = read_csv($file);
 
 ksort($midshipmen);
 foreach ($midshipmen as $key => $value) {
@@ -155,16 +193,16 @@ $name = $midshipmen[$key]['First'] . " " . $midshipmen[$key]['Last'];
 if(isset($signedTaps[$key]['Requested'])){
 $company = $midshipmen[$key]['Company'] . "<sup>th</sup>";
   echo "<td>$name</td>";
-  echo "<td>$key</td>";
+  echo "<td >$key</td>";
   echo "<td>{$midshipmen[$key]['Phone Number']}</td>";
   echo "<td>{$midshipmen[$key]['Year']}</td>";
   echo "<td>$company</td>";
 
   if(isset($signedTaps[$key]['Approved']) && $signedTaps[$key]['Approved'] == "yes"){
-  echo "<td style='background-color:green;'>Yes</td>";
+  echo "<td onclick='appWeekend($key);' style='background-color:green;'>Yes</td>";
 }
   else {
-    echo "<td style='background-color:red;'>No</td>";
+    echo "<td onclick='appWeekend($key);' style='background-color:red;'>No</td>";
   }
   echo "</tr>";
 }
