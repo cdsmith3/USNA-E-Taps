@@ -24,7 +24,7 @@ require_once("lib_read_csv.php");
   <script type="text/javascript" src="sha256.js"></script>
   <script type="text/javascript" src="cookie.js"></script>
 </head>
-
+<br><br><br><br><br><br>
 <body class="bg-dark">
 
   <div class="container">
@@ -81,7 +81,7 @@ require_once("lib_read_csv.php");
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    
+
   </body>
 
   </html>

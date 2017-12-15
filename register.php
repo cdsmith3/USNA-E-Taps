@@ -22,6 +22,7 @@ require_once("error.php");
 
   <script type="text/javascript" src="sha256.js"></script>
 </head>
+<br><br><br><br><br><br>
 
 <body class="bg-dark">
   <div class="container">
